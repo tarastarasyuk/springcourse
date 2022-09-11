@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<tr th:each="editor : ${editors}">
+    <td th:text="${editor.email}"></td>
+    <br>
+</tr>
+</body>
+</html>

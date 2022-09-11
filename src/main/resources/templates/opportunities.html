@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<tr th:each="opportunity : ${opportunities}">
+    <td th:text="${opportunity.content}"></td>
+    <form th:action="@{'/opportunities/delete/'+${opportunity.id}}" method="post">
+        <button type="submit" class="action-button">
+            X
+        </button>
+    </form>
+    <br>
+</tr>
+</body>
+</html>
