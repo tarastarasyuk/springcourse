@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <div class="container mt-3 mb-3">
+    <div class="row justify-content-around">
+      <div class="col-7 offset-1">
+        <button type="button" class="btn btn-link">Home</button>
+        <button type="button" class="btn btn-link">Opportunities</button>
+      </div>
+      <div class="col-3">
+        <button type="button" class="btn btn-outline-primary">Profile</button>
+        <button type="button" class="btn btn-primary">Logout</button>
+      </div>
+    </div>
+  </div>
+</header>
+  <main>
+    <div class="container">
+      <form class="row g-3">
+        <div class="col-6">
+          <label for="inputFirstName" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="inputFirstName" placeholder="Олексій">
+        </div>
+        <div class="col-6">
+          <label for="inputLastName" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="inputLastName" placeholder="Алещенко">
+        </div>
+        <div class="col-md-6">
+          <label for="inputEmail4" class="form-label">Email</label>
+          <input type="email" class="form-control" id="inputEmail4">
+        </div>
+        <div class="col-6">
+          <label for="inputPhone" class="form-label">Phone</label>
+          <input type="text" class="form-control" id="inputPhone" placeholder="@ASDjonok">
+        </div>
+        <div class="col-6">
+          <label for="inputAge" class="form-label">Age</label>
+          <input type="text" class="form-control" id="inputAge" placeholder="25">
+        </div>
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">Skills:</label>
+          <select id="inputState" class="form-select">
+            <option selected>Java</option>
+            <option>Spring</option>
+            <option>React</option>
+            <option>Good person</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Sign up</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+</html>
