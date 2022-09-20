@@ -24,7 +24,8 @@ public class EditorRepositoryImpl implements EditorRepository {
 
     @Override
     public Editor create(Editor entity) {
-        return editorMap.put(editorMap.size() + 1L, entity);
+        entity.setId(editorMap.size() + 1L);
+        return editorMap.put(entity.getId(), entity);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class EditorRepositoryImpl implements EditorRepository {
 
     @Override
     public Editor update(Editor source, Editor target) {
-        return editorMap.put(source.getId(), target);
+        return editorMap.put(target.getId(), source);
     }
 
     @Override

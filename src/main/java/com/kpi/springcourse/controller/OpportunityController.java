@@ -22,13 +22,6 @@ public class OpportunityController {
         return "opportunities";
     }
 
-    @PostMapping("/update/{id}")
-    public String update(@ModelAttribute Opportunity opportunity, @PathVariable Long id) {
-        Opportunity targetOpportunity = opportunitiesService.findById(id);
-        opportunitiesService.update(opportunity, targetOpportunity);
-        return "redirect:/opportunities";
-    }
-
     @GetMapping("/update/{id}")
     public String update(Model model, @PathVariable Long id) {
         Opportunity opportunityToUpdate = opportunitiesService.findById(id);
@@ -36,15 +29,22 @@ public class OpportunityController {
         return "opportunityUpdate";
     }
 
-    @PostMapping("/create")
-    public String createOpportunity(@ModelAttribute Opportunity opportunity) {
-        opportunitiesService.create(opportunity);
+    @PostMapping("/update/{id}")
+    public String update(@ModelAttribute("opportunityToUpdate") Opportunity opportunityToUpdate, @PathVariable Long id) {
+        Opportunity targetOpportunity = opportunitiesService.findById(id);
+        opportunitiesService.update(opportunityToUpdate, targetOpportunity);
         return "redirect:/opportunities";
     }
 
     @GetMapping("/create")
     public String getCreationFormOpportunity(@ModelAttribute("opportunityToCreate") Opportunity opportunityToCreate) {
         return "opportunityCreate";
+    }
+
+    @PostMapping("/create")
+    public String createOpportunity(@ModelAttribute("opportunityToCreate") Opportunity opportunityToCreate) {
+        opportunitiesService.create(opportunityToCreate);
+        return "redirect:/opportunities";
     }
 
     @PostMapping("/delete/{id}")

@@ -16,7 +16,7 @@ public class EditorController {
 
     @GetMapping()
     public String getAll(Model model) {
-        model.addAttribute("editors",editorService.findAll());
+        model.addAttribute("editors", editorService.findAll());
         return "editors";
     }
 }

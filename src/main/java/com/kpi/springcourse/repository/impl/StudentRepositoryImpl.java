@@ -13,7 +13,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     public StudentRepositoryImpl() {
         studentMap = new HashMap<>(Map.of(
-                1L, new Student(1L, "test1@tat.ss", "qwerty","Taras", "Tarasiuk", 34, "094345342", Set.of(new Skill("piano"))),
+                1L, new Student(1L, "test1@tat.ss", "qwerty", "Taras", "Tarasiuk", 34, "094345342", Set.of(new Skill("piano"))),
                 2L, new Student(2L, "test2@tat.ss", "qwerty", "Roman", "Bondarenko", 67, "085345233", Set.of(new Skill("chilling"))),
                 3L, new Student(3L, "test3@tat.ss", "qwerty", "Nadia", "Prokhorchuk", 12, "034523452", Set.of(new Skill("painting"))),
                 4L, new Student(4L, "test4@tat.ss", "qwerty", "Bob", "Bobuk", 19, "043454452", Set.of(new Skill("java"))),
@@ -25,7 +25,8 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public Student create(Student entity) {
-        return studentMap.put(studentMap.size() + 1L, entity);
+        entity.setId(studentMap.size() + 1L);
+        return studentMap.put(entity.getId(), entity);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public Student update(Student source, Student target) {
-        return studentMap.put(source.getId(), target);
+        return studentMap.put(target.getId(), source);
     }
 
     @Override
