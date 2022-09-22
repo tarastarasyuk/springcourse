@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class HomeController {
-    @GetMapping
+    @GetMapping // todo: check if user logged in
     public String home() {
-        return "home";
+        return "home/index";
     }
 }
