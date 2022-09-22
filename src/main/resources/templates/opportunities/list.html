@@ -10,7 +10,12 @@
 </head>
 <body>
 
-<header th:replace="common/header :: header-signed-in"></header>
+<div th:if="${user != null}">
+    <header th:replace="common/header :: header-signed-in"></header>
+</div>
+<div th:if="${user == null}">
+    <header th:replace="common/header :: header-signed-out"></header>
+</div>
 
 <section class="search mt-5">
     <hr>
@@ -24,9 +29,8 @@
                 <div class="dropdown position-absolute bottom-0 end-0">
                     <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        Dropdown link
+                        Options
                     </a>
-
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Newest</a></li>
                         <li><a class="dropdown-item" href="#">ASAP</a></li>
@@ -42,24 +46,34 @@
 <section class="opportunities mt-5">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-8">
-                <div class="opportunity">
+            <div class="col-8 mt-w mb-2" th:each="opportunity : ${opportunities}">
+                <div class="opportunity" th:id="${opportunity.id}">
                     <div class="row">
                         <div class="col-12">
-                            <p class="heading">Opportunity name</p>
+                            <p class="heading" th:text="${opportunity.name}"></p>
                         </div>
                         <div class="col-12">
                             <p>Content:</p>
                         </div>
                         <div class="col-12">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <p th:text="${opportunity.content}"></p>
                         </div>
                         <div class="col-12">
-                            <button type="button" class="btn btn-primary float-end">
-                                Like
-                            </button>
+                            <!--                            DO NOT DELETE COMMENTED LINES-->
+                            <!--                            <div th:if="${user != null}">-->
+                            <form th:action="@{'/opportunities/like/' + ${opportunity.id}}" method="post">
+                                <button type="submit" class="btn btn-primary float-end">
+                                    Like
+                                </button>
+                            </form>
+                            <!--                            </div>-->
+                            <!--                            <div th:if="${user == null}">-->
+                            <!--                                <span class="tt" data-bs-placement="bottom" title="title">-->
+                            <!--                                    <button type="button" class="btn btn-secondary float-end" disabled>-->
+                            <!--                                        Like-->
+                            <!--                                    </button>-->
+                            <!--                                </span>-->
+                            <!--                            </div>-->
                         </div>
                     </div>
                 </div>

@@ -12,18 +12,19 @@ public class OpportunityRepositoryImpl implements OpportunityRepository {
 
     public OpportunityRepositoryImpl() {
         opportunityMap = new HashMap<>(Map.of(
-                1L, new Opportunity(1L, new Date(System.currentTimeMillis() + 30 * 24 * 60 * 60 * 1000L), false, "Java"),
-                2L, new Opportunity(2L, new Date(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000L), false, "MySQL"),
-                3L, new Opportunity(3L, new Date(System.currentTimeMillis() + 60 * 24 * 60 * 60 * 1000L), false, "Erazmus"),
-                4L, new Opportunity(4L, new Date(System.currentTimeMillis() + 3 * 24 * 60 * 60 * 1000L), true, "JS"),
-                5L, new Opportunity(5L, new Date(System.currentTimeMillis() + 5 * 24 * 60 * 60 * 1000L), true, "English")
+                1L, new Opportunity(1L, "Java", new Date(System.currentTimeMillis() + 30 * 24 * 60 * 60 * 1000L), false, "Java smth"),
+                2L, new Opportunity(2L, "MySQL", new Date(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000L), false, "MySQL smth"),
+                3L, new Opportunity(3L, "Erazmus", new Date(System.currentTimeMillis() + 60 * 24 * 60 * 60 * 1000L), false, "Erazmus smth"),
+                4L, new Opportunity(4L, "JS", new Date(System.currentTimeMillis() + 3 * 24 * 60 * 60 * 1000L), true, "JS smth"),
+                5L, new Opportunity(5L, "English", new Date(System.currentTimeMillis() + 5 * 24 * 60 * 60 * 1000L), true, "English smth")
         ));
     }
 
     @Override
     public Opportunity create(Opportunity entity) {
         entity.setId(opportunityMap.size() + 1L);
-        return opportunityMap.put(entity.getId(), entity);
+        opportunityMap.put(entity.getId(), entity);
+        return entity;
     }
 
     @Override

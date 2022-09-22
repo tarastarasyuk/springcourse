@@ -4,37 +4,33 @@ import com.kpi.springcourse.model.Opportunity;
 import com.kpi.springcourse.service.OpportunityService;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Setter
-@RequestMapping("/opportunities")
 @Controller
 @AllArgsConstructor
+@RequestMapping("/opportunities")
 public class OpportunityController {
 
     private OpportunityService opportunitiesService;
 
-    // todo: provide opportunities by user email
     @GetMapping()
     public String getAll(Model model) {
         model.addAttribute("opportunities", opportunitiesService.findAll());
-        return "opportunities/not-signed-in";
+
+        // todo: check if user logged in
+        // for now, we assume that user is always logged in
+        return "opportunities/list";
     }
 
-    @GetMapping("/update/{id}")
-    public String update(Model model, @PathVariable Long id) {
-        Opportunity opportunityToUpdate = opportunitiesService.findById(id);
-        model.addAttribute("opportunityToUpdate", opportunityToUpdate);
-        return "opportunities/create";
-    }
-
-    @PostMapping("/update/{id}")
-    public String update(@ModelAttribute("opportunityToUpdate") Opportunity opportunityToUpdate, @PathVariable Long id) {
-        Opportunity targetOpportunity = opportunitiesService.findById(id);
-        opportunitiesService.update(opportunityToUpdate, targetOpportunity);
-        return "redirect:/opportunities/not-signed-in";
+    @PostMapping("/like/{id}")
+    public String likeOpportunity(@PathVariable Long id) {
+        log.info("You liked opportunity {}: {}", id, opportunitiesService.findById(id));
+        return "redirect:/opportunities#" + id;
     }
 
     @GetMapping("/create")
@@ -44,13 +40,33 @@ public class OpportunityController {
 
     @PostMapping("/create")
     public String createOpportunity(@ModelAttribute("opportunityToCreate") Opportunity opportunityToCreate) {
-        opportunitiesService.create(opportunityToCreate);
-        return "redirect:/opportunities/not-signed-in";
+        long id = opportunitiesService.create(opportunityToCreate).getId();
+        return "redirect:/opportunities#" + id;
+    }
+
+    @GetMapping("/edit")
+    public String table(Model model) {
+        model.addAttribute("opportunities", opportunitiesService.findAll());
+        return "opportunities/table";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(Model model, @PathVariable Long id) {
+        Opportunity opportunityToUpdate = opportunitiesService.findById(id);
+        model.addAttribute("opportunityToEdit", opportunityToUpdate);
+        return "opportunities/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String edit(@ModelAttribute("opportunityToEdit") Opportunity opportunityToUpdate, @PathVariable Long id) {
+        Opportunity targetOpportunity = opportunitiesService.findById(id);
+        opportunitiesService.update(opportunityToUpdate, targetOpportunity);
+        return "redirect:/opportunities#" + id;
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         opportunitiesService.delete(id);
-        return "redirect:/opportunities/not-signed-in";
+        return "redirect:/opportunities";
     }
 }

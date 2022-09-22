@@ -13,29 +13,42 @@
 <header th:replace="common/header :: header-signed-in"></header>
 
 <div class="container mt-5">
-    <form class="row">
+    <form class="row" th:action="@{/opportunities/create}" method="post" th:object="${opportunityToCreate}">
         <div class=" form position-relative col-6 offset-3">
             <div class="row justify-content-center">
                 <div class="col-6">
                     <h4 class="align-content-center">Create opportunity</h4>
                 </div>
             </div>
+
+            <div class="row justify-content-center form-group mt-3">
+                <div class="col-3">
+                    <label>Enter a name:</label>
+                </div>
+                <div class="col-5">
+                    <label for="name"></label>
+                    <input type="text" id="name" th:field="*{name}" class="form-control" autofocus>
+                </div>
+            </div>
+
             <div class="row justify-content-center form-group mt-3">
                 <div class="col-3">
                     <label>Enter date:</label>
                 </div>
                 <div class="col-5">
                     <label for="date"></label>
-                    <input type="date" id="date" class="form-control">
+                    <input type="date" id="date" th:field="*{deadline}" class="form-control">
                 </div>
             </div>
+
             <div class="row justify-content-center mt-3">
                 <div class="col-4">
                     <label>ASAP</label>
                 </div>
                 <div class="col-2">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
+                               value="1" th:field="*{ASAP}">
                         <label class="form-check-label" for="flexRadioDefault1">
                             Yes
                         </label>
@@ -44,22 +57,24 @@
                 <div class="col-2">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
-                               checked>
+                               value="0" th:field="*{ASAP}" checked>
                         <label class="form-check-label" for="flexRadioDefault2">
                             No
                         </label>
                     </div>
                 </div>
             </div>
+
             <div class="row justify-content-center mt-3">
                 <div class="col-3">
                     <label>Content:</label>
                 </div>
                 <div class="col-5">
                     <label for="textArea"></label>
-                    <textarea class="form-control" id="textArea" rows="3"></textarea>
+                    <textarea class="form-control" id="textArea" th:field="*{content}" rows="3"></textarea>
                 </div>
             </div>
+
             <div class="float-end mt-3">
                 <button type="submit" class="btn btn-primary">Create</button>
             </div>
