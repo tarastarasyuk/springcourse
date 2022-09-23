@@ -1,4 +1,4 @@
-package com.kpi.springcourse.controller;
+package com.kpi.springcourse.repository.controller;
 
 import com.kpi.springcourse.model.Student;
 import com.kpi.springcourse.service.StudentService;
