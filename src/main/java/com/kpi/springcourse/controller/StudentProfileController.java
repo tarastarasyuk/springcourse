@@ -17,4 +17,9 @@ public class StudentProfileController {
         model.addAttribute("students", studentService.findAll());
         return "students";
     }
+
+    @GetMapping("/profile")
+    public String profile() {
+        return "profile/index";
+    }
 }

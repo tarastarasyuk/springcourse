@@ -26,7 +26,8 @@ public class StudentRepositoryImpl implements StudentRepository {
     @Override
     public Student create(Student entity) {
         entity.setId(studentMap.size() + 1L);
-        return studentMap.put(entity.getId(), entity);
+        studentMap.put(entity.getId(), entity);
+        return entity;
     }
 
     @Override

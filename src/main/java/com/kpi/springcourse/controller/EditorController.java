@@ -1,4 +1,4 @@
-package com.kpi.springcourse.repository.controller;
+package com.kpi.springcourse.controller;
 
 import com.kpi.springcourse.service.EditorService;
 import org.springframework.beans.factory.annotation.Autowired;

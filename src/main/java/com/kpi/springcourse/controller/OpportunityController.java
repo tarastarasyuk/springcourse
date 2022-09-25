@@ -1,4 +1,4 @@
-package com.kpi.springcourse.repository.controller;
+package com.kpi.springcourse.controller;
 
 import com.kpi.springcourse.model.Opportunity;
 import com.kpi.springcourse.service.OpportunityService;

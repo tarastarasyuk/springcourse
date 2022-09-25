@@ -25,7 +25,8 @@ public class EditorRepositoryImpl implements EditorRepository {
     @Override
     public Editor create(Editor entity) {
         entity.setId(editorMap.size() + 1L);
-        return editorMap.put(entity.getId(), entity);
+        editorMap.put(entity.getId(), entity);
+        return entity;
     }
 
     @Override
