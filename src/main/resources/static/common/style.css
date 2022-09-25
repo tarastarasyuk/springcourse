@@ -9,10 +9,14 @@ a {
 /* header content */
 
 header {
+    background-color: white;
     display: flex;
     justify-content: space-between;
     border-bottom: 2px solid #F0F0F0;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 
 .btn-link {
@@ -56,4 +60,8 @@ header {
 button {
     margin: 0 10px !important;
     padding: 5px 30px !important;
+}
+
+.container{
+    margin-top: 50px;
 }
