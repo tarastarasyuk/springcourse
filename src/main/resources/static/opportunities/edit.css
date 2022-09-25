@@ -12,3 +12,12 @@
 th, td {
     padding: 15px !important;
 }
+
+.create-btn {
+    position: relative;
+    top: 24px;
+}
+
+.editor-action__buttons {
+    display: flex;
+}
