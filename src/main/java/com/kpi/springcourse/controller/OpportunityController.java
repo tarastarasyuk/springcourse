@@ -2,6 +2,7 @@ package com.kpi.springcourse.controller;
 
 import com.kpi.springcourse.model.Opportunity;
 import com.kpi.springcourse.service.OpportunityService;
+import com.kpi.springcourse.service.SkillService;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

@@ -12,8 +12,8 @@ public class Student extends User {
     private String phone;
     private Set<Skill> skills;
 
-    public Student(Long id, String email, String password, String firstName, String lastName, Integer age, String phone, Set<Skill> skills) {
-        super(id, email, password, Role.ROLE_STUDENT);
+    public Student(Long id, String email, String firstName, String lastName, Integer age, String phone, Set<Skill> skills) {
+        super(id, email, Role.ROLE_STUDENT);
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;

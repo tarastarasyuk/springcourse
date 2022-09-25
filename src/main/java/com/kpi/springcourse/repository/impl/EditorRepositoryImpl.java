@@ -15,10 +15,10 @@ public class EditorRepositoryImpl implements EditorRepository {
 
     public EditorRepositoryImpl() {
         editorMap = new HashMap<>(Map.of(
-                1L, new Editor(1L, "test@tat.ss", "qwerty"),
-                2L, new Editor(2L, "admin@tat.ss", "123412"),
-                3L, new Editor(3L, "tettttt@tat.ss", "geargrh"),
-                4L, new Editor(4L, "red@tat.ss", "ageg")
+                1L, new Editor(1L, "test@tat.ss"),
+                2L, new Editor(2L, "admin@tat.ss"),
+                3L, new Editor(3L, "tettttt@tat.ss"),
+                4L, new Editor(4L, "red@tat.ss")
         ));
     }
 

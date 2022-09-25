@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<header th:fragment="header-signed-out">
+<header th:fragment="header">
     <div class="container mt-3 mb-3">
         <div class="row">
             <div class="col-7 offset-1">
@@ -17,36 +17,21 @@
                     <button type="button" class="btn btn-link">Opportunities</button>
                 </a>
             </div>
-            <div class="col-3 button-group">
+            <div class="col-3 button-group" th:if="${#request.getSession().getAttribute('userEmail') != null}">
+                <a th:href="@{/profile}">
+                    <button type="button" class="btn btn-outline-primary">Profile</button>
+                </a>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-primary">Logout</button>
+                </form>
+            </div>
+            <div class="col-3 button-group" th:unless="${#request.getSession().getAttribute('userEmail') != null}">
                 <a th:href="@{/sign-in}">
                     <button type="button" class="btn btn-outline-primary">Sign in</button>
                 </a>
                 <a th:href="@{/sign-up}">
                     <button type="button" class="btn btn-primary">Register</button>
                 </a>
-            </div>
-        </div>
-    </div>
-</header>
-
-<header th:fragment="header-signed-in">
-    <div class="container mt-3 mb-3">
-        <div class="row justify-content-around">
-            <div class="col-7 offset-1">
-                <a th:href="@{/}">
-                    <button type="button" class="btn btn-link">Home</button>
-                </a>
-                <a th:href="@{/opportunities}">
-                    <button type="button" class="btn btn-link">Opportunities</button>
-                </a>
-            </div>
-            <div class="col-3 button-group">
-                <a th:href="@{/profile}">
-                    <button type="button" class="btn btn-outline-primary">Profile</button>
-                </a>
-                <form th:action="@{/logout}" method="post">
-                    <button type="button" class="btn btn-primary">Logout</button>
-                </form>
             </div>
         </div>
     </div>

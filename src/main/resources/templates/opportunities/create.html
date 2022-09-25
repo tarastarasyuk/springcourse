@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<header th:replace="common/header :: header-signed-in"></header>
+<header th:replace="common/header :: header"></header>
 
 <div class="container mt-5">
     <form class="row" th:action="@{/opportunities/create}" method="post" th:object="${opportunityToCreate}">
