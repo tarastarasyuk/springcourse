@@ -21,6 +21,7 @@
                 </div>
                 <div class="col-9">
                     <input type="email" class="form-control" id="inputEmail" name="email" placeholder="email">
+                    <span th:if="${emailError != null}" th:text="${emailError}" style="color: red"></span>
                 </div>
                 <div class="col-12 justify-content-end">
                     <button type="submit" class="btn btn-primary float-end">Sign in</button>

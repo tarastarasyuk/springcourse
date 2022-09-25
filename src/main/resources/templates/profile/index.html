@@ -18,47 +18,64 @@
         <div class="col-6 border-end">
             <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4">
                 <nav class="nav nav-pills flex-column form mt-5">
-                    <form class="row g-3">
+                    <form class="row g-3" th:action="@{/profile/save}" method="post" th:object="${user}">
                         <div class="col-3">
                             <label for="inputFirstName" class="form-label">First Name</label>
                         </div>
                         <div class="col-9">
-                            <input type="text" class="form-control" id="inputFirstName" placeholder="Олексій">
+                            <input type="text" class="form-el form-control" id="inputFirstName" placeholder="Олексій"
+                                   disabled
+                                   th:field="*{firstName}">
                         </div>
                         <div class="col-3">
                             <label for="inputLastName" class="form-label">Last Name</label>
                         </div>
                         <div class="col-9">
-                            <input type="text" class="form-control" id="inputLastName" placeholder="Алещенко">
+                            <input type="text" class="form-el form-control" id="inputLastName" placeholder="Алещенко"
+                                   disabled
+                                   th:field="*{lastName}">
                         </div>
                         <div class="col-3">
                             <label for="inputEmail" class="form-label">Email</label>
                         </div>
                         <div class="col-9">
-                            <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                            <input type="email" class="form-el form-control" id="inputEmail" placeholder="Email"
+                                   disabled
+                                   th:field="*{email}">
+                            <span th:if="${emailError != null}" th:text="${emailError}" style="color: red"></span>
                         </div>
                         <div class="col-3">
                             <label for="inputPhone" class="form-label">Phone</label>
                         </div>
                         <div class="col-9">
-                            <input type="text" class="form-control" id="inputPhone" placeholder="@ASDjonok">
+                            <input type="text" class="form-el form-control" id="inputPhone" placeholder="@ASDjonok"
+                                   disabled
+                                   th:field="*{phone}">
                         </div>
                         <div class="col-3">
                             <label for="inputAge" class="form-label">Age</label>
                         </div>
                         <div class="col-9">
-                            <input type="text" class="form-control" id="inputAge" placeholder="25">
+                            <input type="text" class="form-el form-control" id="inputAge" placeholder="25" disabled
+                                   th:field="*{age}">
                         </div>
                         <div class="col-3">
                             <label for="inputState" class="form-label">Skills:</label>
                         </div>
                         <div class="col-9">
-                            <select id="inputState" class="form-select">
-                                <option selected>Java</option>
-                                <option>Spring</option>
-                                <option>React</option>
-                                <option>Good person</option>
+                            <select id="inputState" class="form-select" multiple disabled>
+                                <option th:each="skill : ${user.skills}"
+                                        th:value="${skill.type}"
+                                        th:text="${skill.type}">
+                                </option>
                             </select>
+                        </div>
+
+                        <div class="profile-editing-buttons">
+                            <button type="button" id="activateEditing" class="btn btn-primary"
+                                    onclick="removeDisableAttributes()">Edit profile
+                            </button>
+                            <button type="submit" id="saveChanges" class="form-el btn btn-secondary" disabled>Save</button>
                         </div>
                     </form>
                 </nav>
@@ -72,10 +89,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-10 offset-1">
-                                <div class="opportunity">
+                                <div class="opportunity" th:each="opportunity : ${user.likedOpportunities}">
                                     <div class="row">
                                         <div class="col-6">
-                                            <p class="heading">Opportunity name</p>
+                                            <p class="heading" th:text="${opportunity.name}"></p>
                                         </div>
                                         <div class="col-6 liked">
                                             <i class="fa-solid fa-star float-end"></i>
@@ -84,87 +101,15 @@
                                             <p>Content:</p>
                                         </div>
                                         <div class="col-12">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                                commodo consequat.</p>
+                                            <p th:text="${opportunity.content}"></p>
                                         </div>
                                         <div class="col-12">
-                                            <button type="button" class="btn btn-primary float-end">
-                                                Unlike
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="opportunity">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p class="heading">Opportunity name</p>
-                                        </div>
-                                        <div class="col-6 liked">
-                                            <i class="fa-solid fa-star float-end"></i>
-                                        </div>
-                                        <div class="col-12">
-                                            <p>Content:</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                                commodo consequat.</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <button type="button" class="btn btn-primary float-end">
-                                                Unlike
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="opportunity">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p class="heading">Opportunity name</p>
-                                        </div>
-                                        <div class="col-6 liked">
-                                            <i class="fa-solid fa-star float-end"></i>
-                                        </div>
-                                        <div class="col-12">
-                                            <p>Content:</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                                commodo consequat.</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <button type="button" class="btn btn-primary float-end">
-                                                Unlike
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="opportunity">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p class="heading">Opportunity name</p>
-                                        </div>
-                                        <div class="col-6 liked">
-                                            <i class="fa-solid fa-star float-end"></i>
-                                        </div>
-                                        <div class="col-12">
-                                            <p>Content:</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                                commodo consequat.</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <button type="button" class="btn btn-primary float-end">
-                                                Unlike
-                                            </button>
+                                            <form th:action="@{'/profile/unlike/' + ${opportunity.id}}" method="post">
+                                                <button type="submit" class="btn btn-primary float-end"
+                                                        style="background: gray; border-color: gray">
+                                                    Unlike
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -177,6 +122,22 @@
     </div>
 </div>
 
+<script>
+    function removeDisableAttributes() {
+        for (const el of document.getElementsByClassName("form-el")) {
+            el.removeAttribute("disabled")
+        }
+
+        const activateEditingBtn = document.getElementById("activateEditing");
+        activateEditingBtn.classList.remove("btn-primary");
+        activateEditingBtn.classList.add("btn-secondary");
+        activateEditingBtn.setAttribute("disabled", "true");
+
+        const saveChangesBtn = document.getElementById("saveChanges");
+        saveChangesBtn.classList.remove("btn-secondary");
+        saveChangesBtn.classList.add("btn-primary");
+    }
+</script>
 
 </body>
 </html>

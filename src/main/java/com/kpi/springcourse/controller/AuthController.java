@@ -29,8 +29,13 @@ public class AuthController {
     }
 
     @PostMapping("/sign-in")
-    public String signInStudent(HttpServletRequest request) {
-        request.getSession().setAttribute("userEmail", request.getParameter("email"));
+    public String signInStudent(HttpServletRequest request, Model model) {
+        String emailRequest = request.getParameter("email");
+        if (studentService.checkIfEmailAvailable(emailRequest)) {
+            model.addAttribute("emailError", "User with this email does not exist");
+            return "sign-in/index";
+        }
+        request.getSession().setAttribute("userEmail", emailRequest);
         return "redirect:/";
     }
 

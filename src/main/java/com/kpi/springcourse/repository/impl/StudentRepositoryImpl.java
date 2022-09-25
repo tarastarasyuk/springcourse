@@ -1,9 +1,11 @@
 package com.kpi.springcourse.repository.impl;
 
+import com.kpi.springcourse.model.Opportunity;
 import com.kpi.springcourse.model.Student;
 import com.kpi.springcourse.repository.SkillRepository;
 import com.kpi.springcourse.repository.StudentRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -46,11 +48,35 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     @Override
     public Student update(Student source, Student target) {
-        return studentMap.put(target.getId(), source);
+        source.setId(target.getId());
+        source.setSkills(target.getSkills());
+        source.setLikedOpportunities(target.getLikedOpportunities());
+        studentMap.put(target.getId(), source);
+        return source;
     }
 
     @Override
     public Student delete(Long aLong) {
         return studentMap.remove(aLong);
+    }
+
+    @Override
+    public void likeUnlikeOpportunity(Student student, Opportunity opportunity) {
+        Set<Opportunity> likedOpportunities = student.getLikedOpportunities();
+        if (likedOpportunities.contains(opportunity)) likedOpportunities.remove(opportunity);
+        else likedOpportunities.add(opportunity);
+    }
+
+    @Override
+    public Optional<Student> findByEmail(String email) {
+        return studentMap.values().stream()
+                .filter(student -> student.getEmail().equals(email))
+                .findAny();
+    }
+
+    @Override
+    public boolean checkIfEmailAvailable(String email) {
+        return studentMap.values().stream()
+                .noneMatch(student -> student.getEmail().equals(email));
     }
 }

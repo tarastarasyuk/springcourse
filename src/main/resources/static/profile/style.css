@@ -22,3 +22,8 @@
     color: #F5B700;
     font-size: 30px;
 }
+
+.profile-editing-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
