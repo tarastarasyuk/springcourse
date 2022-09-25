@@ -17,4 +17,7 @@ public class Opportunity {
 
     private Boolean ASAP;
     private String content;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date createdAt;
 }
