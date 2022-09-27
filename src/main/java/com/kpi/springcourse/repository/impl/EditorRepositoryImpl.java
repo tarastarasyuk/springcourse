@@ -1,13 +1,11 @@
 package com.kpi.springcourse.repository.impl;
 
 import com.kpi.springcourse.model.Editor;
+import com.kpi.springcourse.model.Student;
 import com.kpi.springcourse.repository.EditorRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class EditorRepositoryImpl implements EditorRepository {
@@ -47,5 +45,19 @@ public class EditorRepositoryImpl implements EditorRepository {
     @Override
     public Editor delete(Long aLong) {
         return editorMap.remove(aLong);
+    }
+
+
+    @Override
+    public boolean checkIfEmailAvailable(String email) {
+        return editorMap.values().stream()
+                .noneMatch(editor -> editor.getEmail().equals(email));
+    }
+
+    @Override
+    public Optional<Editor> findByEmail(String email) {
+        return editorMap.values().stream()
+                .filter(editor -> editor.getEmail().equals(email))
+                .findAny();
     }
 }
