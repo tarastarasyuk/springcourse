@@ -53,16 +53,16 @@
                         <div class="col-12">
                             <p th:text="${opportunity.content}"></p>
                         </div>
-                        <div class="col-12">
-                            <div th:if="${#request.getSession().getAttribute('userEmail') != null}">
-                                <div th:if="${!studentService.isLiked(#request.getSession().getAttribute('userEmail'), opportunity)}">
+                        <div class="col-12" th:if="${#request.getSession().getAttribute('userRole') != 'ROLE_EDITOR'}">
+                            <div th:if="${user != null}">
+                                <div th:if="${!studentService.isLiked(user, opportunity)}">
                                     <form th:action="@{'/opportunities/like/' + ${opportunity.id}}" method="post">
                                         <button type="submit" class="btn btn-primary float-end">
                                             Like
                                         </button>
                                     </form>
                                 </div>
-                                <div th:unless="${!studentService.isLiked(#request.getSession().getAttribute('userEmail'), opportunity)}">
+                                <div th:unless="${!studentService.isLiked(user, opportunity)}">
                                     <form th:action="@{'/opportunities/unlike/' + ${opportunity.id}}" method="post">
                                         <button type="submit" class="btn btn-primary float-end" style="background: gray; border-color: gray">
                                             Unlike
@@ -70,7 +70,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <div th:unless="${#request.getSession().getAttribute('userEmail') != null}">
+                            <div th:unless="${user != null}">
                                 <span class="tt" data-bs-placement="bottom" title="title">
                                     <button type="button" class="btn btn-secondary float-end" disabled>
                                         Like

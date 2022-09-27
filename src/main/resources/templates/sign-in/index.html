@@ -20,7 +20,8 @@
                     <label for="inputEmail" class="form-label">Email:</label>
                 </div>
                 <div class="col-9">
-                    <input type="email" class="form-control" id="inputEmail" name="email" placeholder="email">
+                    <input type="email" class="form-control" id="inputEmail" name="email" placeholder="example@mail.com"
+                           required>
                     <span th:if="${emailError != null}" th:text="${emailError}" style="color: red"></span>
                 </div>
                 <div class="col-12 justify-content-end">

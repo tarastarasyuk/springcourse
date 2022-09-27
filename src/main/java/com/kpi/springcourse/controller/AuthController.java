@@ -60,7 +60,13 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public String signUpStudent(@ModelAttribute("userToSignUp") StudentDto studentDto) {
+    public String signUpStudent(@ModelAttribute("userToSignUp") StudentDto studentDto, Model model) {
+        if (!studentService.checkIfEmailAvailable(studentDto.getEmail())) {
+            model.addAttribute("emailError", "This email is already in use");
+            model.addAttribute("skillsToSelect", skillService.findAll());
+            return "sign-up/index";
+        }
+
         Set<Skill> skillSet = Arrays.stream(studentDto.getSkills())
                 .map(skillService::findByType)
                 .collect(Collectors.toSet());
