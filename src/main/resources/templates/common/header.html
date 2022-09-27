@@ -18,9 +18,18 @@
                 </a>
             </div>
             <div class="col-3 button-group" th:if="${#request.getSession().getAttribute('userEmail') != null}">
-                <a th:href="@{/profile}">
-                    <button type="button" class="btn btn-outline-primary">Profile</button>
-                </a>
+                <div th:switch="${#request.getSession().getAttribute('userRole')}">
+                    <p th:case="'ROLE_STUDENT'">
+                        <a th:href="@{/profile}">
+                            <button type="button" class="btn btn-outline-primary">Profile</button>
+                        </a>
+                    </p>
+                    <p th:case="'ROLE_EDITOR'">
+                        <a th:href="@{/editor/opportunities}">
+                            <button type="button" class="btn btn-outline-primary">Panel</button>
+                        </a>
+                    </p>
+                </div>
                 <form th:action="@{/logout}" method="post">
                     <button type="submit" class="btn btn-primary">Logout</button>
                 </form>
