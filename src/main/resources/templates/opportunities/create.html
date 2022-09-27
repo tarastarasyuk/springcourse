@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-5">
                     <label for="name"></label>
-                    <input type="text" id="name" th:field="*{name}" class="form-control" autofocus>
+                    <input type="text" id="name" th:field="*{name}" class="form-control" required autofocus>
                 </div>
             </div>
 
@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-5">
                     <label for="date"></label>
-                    <input type="date" id="date" th:field="*{deadline}" class="form-control">
+                    <input type="date" id="date" th:field="*{deadline}" class="form-control" required>
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
                 <div class="col-2">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
-                               value="0" th:field="*{ASAP}" checked>
+                               value="0" th:field="*{ASAP}">
                         <label class="form-check-label" for="flexRadioDefault2">
                             No
                         </label>

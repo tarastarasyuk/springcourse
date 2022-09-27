@@ -24,40 +24,37 @@
                         </div>
                         <div class="col-9">
                             <input type="text" class="form-el form-control" id="inputFirstName" placeholder="Олексій"
-                                   disabled
-                                   th:field="*{firstName}">
+                                   required disabled th:field="*{firstName}">
                         </div>
                         <div class="col-3">
                             <label for="inputLastName" class="form-label">Last Name</label>
                         </div>
                         <div class="col-9">
                             <input type="text" class="form-el form-control" id="inputLastName" placeholder="Алещенко"
-                                   disabled
-                                   th:field="*{lastName}">
+                                   required disabled th:field="*{lastName}">
                         </div>
                         <div class="col-3">
                             <label for="inputEmail" class="form-label">Email</label>
                         </div>
                         <div class="col-9">
-                            <input type="email" class="form-el form-control" id="inputEmail" placeholder="Email"
-                                   disabled
-                                   th:field="*{email}">
+                            <input type="email" class="form-el form-control" id="inputEmail"
+                                   placeholder="example@gmail.com" required disabled th:field="*{email}">
                             <span th:if="${emailError != null}" th:text="${emailError}" style="color: red"></span>
                         </div>
                         <div class="col-3">
                             <label for="inputPhone" class="form-label">Phone</label>
                         </div>
                         <div class="col-9">
-                            <input type="text" class="form-el form-control" id="inputPhone" placeholder="@ASDjonok"
-                                   disabled
-                                   th:field="*{phone}">
+                            <input type="text" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.\-]?\d{3}[\s.\-]?\d{4}$"
+                                   class="form-el form-control" id="inputPhone" placeholder="0123456789" required
+                                   disabled th:field="*{phone}">
                         </div>
                         <div class="col-3">
                             <label for="inputAge" class="form-label">Age</label>
                         </div>
                         <div class="col-9">
-                            <input type="text" class="form-el form-control" id="inputAge" placeholder="25" disabled
-                                   th:field="*{age}">
+                            <input type="number" min="1" max="100" class="form-el form-control" id="inputAge"
+                                   placeholder="25" required disabled th:field="*{age}">
                         </div>
                         <div class="col-3">
                             <label for="inputState" class="form-label">Skills:</label>
@@ -75,7 +72,8 @@
                             <button type="button" id="activateEditing" class="btn btn-primary"
                                     onclick="removeDisableAttributes()">Edit profile
                             </button>
-                            <button type="submit" id="saveChanges" class="form-el btn btn-secondary" disabled>Save</button>
+                            <button type="submit" id="saveChanges" class="form-el btn btn-secondary" disabled>Save
+                            </button>
                         </div>
                     </form>
                 </nav>
