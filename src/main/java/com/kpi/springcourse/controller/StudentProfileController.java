@@ -1,5 +1,6 @@
 package com.kpi.springcourse.controller;
 
+import com.kpi.springcourse.constants.SpringCourseConstants;
 import com.kpi.springcourse.model.Student;
 import com.kpi.springcourse.service.OpportunityService;
 import com.kpi.springcourse.service.StudentService;
@@ -28,7 +29,7 @@ public class StudentProfileController {
 
     @GetMapping("/profile")
     public String profile(Model model, HttpServletRequest request) {
-        model.addAttribute("user", studentService.findByEmail((String) request.getSession().getAttribute("userEmail")));
+        model.addAttribute("user", studentService.findByEmail((String) request.getSession().getAttribute(SpringCourseConstants.SESSION_AUTH_ATTR)));
         return "profile/index";
     }
 

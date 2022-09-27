@@ -1,6 +1,7 @@
 package com.kpi.springcourse.service;
 
 import com.kpi.springcourse.model.Editor;
+import com.kpi.springcourse.model.Student;
 import com.kpi.springcourse.repository.EditorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,4 +33,11 @@ public class EditorService {
         return editorRepository.delete(id);
     }
 
+    public boolean checkIfEmailAvailable(String email) {
+        return editorRepository.checkIfEmailAvailable(email);
+    }
+
+    public Editor findByEmail(String email) {
+        return editorRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
+    }
 }

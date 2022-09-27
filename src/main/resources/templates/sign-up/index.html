@@ -21,40 +21,46 @@
                 </div>
                 <div class="col-9">
                     <input type="text" class="form-control" id="inputFirstName" placeholder="Олексій"
-                           th:field="*{firstName}">
+                           th:field="*{firstName}" required>
                 </div>
                 <div class="col-3">
                     <label for="inputLastName" class="form-label">Last Name</label>
                 </div>
                 <div class="col-9">
                     <input type="text" class="form-control" id="inputLastName" placeholder="Алещенко"
-                           th:field="*{lastName}">
+                           th:field="*{lastName}" required>
                 </div>
                 <div class="col-3">
                     <label for="inputEmail" class="form-label">Email</label>
                 </div>
                 <div class="col-9">
-                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" th:field="*{email}">
+                    <input type="email" class="form-control" id="inputEmail" placeholder="example@mail.com" th:field="*{email}"
+                           required>
+                    <span th:if="${emailError}" th:text="${emailError}" style="color: red"></span>
                 </div>
                 <div class="col-3">
                     <label for="inputPhone" class="form-label">Phone</label>
                 </div>
                 <div class="col-9">
-                    <input type="text" class="form-control" id="inputPhone" placeholder="@ASDjonok" th:field="*{phone}">
+                    <input type="text" pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.\-]?\d{3}[\s.\-]?\d{4}$"
+                           class="form-control" id="inputPhone" placeholder="0123456789" th:field="*{phone}" required>
+                    <span>Available formats:</span>
+                    <p>+XX (XXX) XXX-XXXX, XXX-XXX-XXXX, XXX XXX XXXX</p>
                 </div>
                 <div class="col-3">
                     <label for="inputAge" class="form-label">Age</label>
                 </div>
                 <div class="col-9">
-                    <input type="text" class="form-control" id="inputAge" placeholder="25" th:field="*{age}">
+                    <input type="number" min="1" max="100" class="form-control" id="inputAge" placeholder="25"
+                           th:field="*{age}" required>
                 </div>
                 <div class="col-3">
                     <label for="inputState" class="form-label">Skills:</label>
                 </div>
                 <div class="col-9">
                     <select id="inputState" th:field="*{skills}" multiple>
-                        <option value="0">select option</option>
-                        <option th:each="skill : ${skillsToSelect}" th:value="${skill.type}" th:text="${skill.type}"></option>
+                        <option th:each="skill : ${skillsToSelect}" th:value="${skill.type}"
+                                th:text="${skill.type}"></option>
                     </select>
                 </div>
                 <div class="col-12">

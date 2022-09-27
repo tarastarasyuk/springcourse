@@ -1,7 +1,6 @@
 package com.kpi.springcourse.controller;
 
 import com.kpi.springcourse.model.Opportunity;
-import com.kpi.springcourse.service.EditorService;
 import com.kpi.springcourse.service.OpportunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 public class EditorController {
 
     @Autowired
-    private EditorService editorService;
-    @Autowired
     private OpportunityService opportunitiesService;
 
     @GetMapping("")
@@ -24,7 +21,10 @@ public class EditorController {
     }
 
     @GetMapping("/create")
-    public String getCreationFormOpportunity(@ModelAttribute("opportunityToCreate") Opportunity opportunityToCreate) {
+    public String getCreationFormOpportunity(Model model) {
+        Opportunity opportunityToCreate = new Opportunity();
+        opportunityToCreate.setASAP(false);
+        model.addAttribute("opportunityToCreate", opportunityToCreate);
         return "opportunities/create";
     }
 
