@@ -1,24 +1,26 @@
 package com.kpi.springcourse.service;
 
 import com.kpi.springcourse.model.Editor;
-import com.kpi.springcourse.model.Student;
 import com.kpi.springcourse.repository.EditorRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class EditorService {
-    private EditorRepository editorRepository;
+
+    private final EditorRepository editorRepository;
 
     public Editor create(Editor entity) {
         return editorRepository.create(entity);
     }
 
     public Editor findById(Long id) {
-        return editorRepository.findById(id);
+        return editorRepository.findById(id).orElseThrow(() -> {
+            throw new RuntimeException("Editor with id %d not found".formatted(id));
+        });
     }
 
     public List<Editor> findAll() {
@@ -29,8 +31,8 @@ public class EditorService {
         return editorRepository.update(source, target);
     }
 
-    public Editor delete(Long id) {
-        return editorRepository.delete(id);
+    public void delete(Long id) {
+        editorRepository.delete(id);
     }
 
     public boolean checkIfEmailAvailable(String email) {
@@ -38,6 +40,8 @@ public class EditorService {
     }
 
     public Editor findByEmail(String email) {
-        return editorRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
+        return editorRepository.findByEmail(email).orElseThrow(() -> {
+            throw new RuntimeException("Editor with email '%s' not found".formatted(email));
+        });
     }
 }

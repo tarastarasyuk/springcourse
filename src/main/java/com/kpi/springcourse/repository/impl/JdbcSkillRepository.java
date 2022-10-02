@@ -2,26 +2,21 @@ package com.kpi.springcourse.repository.impl;
 
 import com.kpi.springcourse.model.Skill;
 import com.kpi.springcourse.repository.SkillRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
-@AllArgsConstructor
 public class JdbcSkillRepository implements SkillRepository {
-
-    private JdbcTemplate jdbcTemplate;
-
     @Override
     public Skill create(Skill entity) {
         return null;
     }
 
     @Override
-    public Skill findById(Long aLong) {
-        return null;
+    public Optional<Skill> findById(Long aLong) {
+        return Optional.empty();
     }
 
     @Override
@@ -35,8 +30,8 @@ public class JdbcSkillRepository implements SkillRepository {
     }
 
     @Override
-    public Skill delete(Long aLong) {
-        return null;
+    public void delete(Long aLong) {
+
     }
 
     @Override

@@ -2,26 +2,31 @@ package com.kpi.springcourse.service;
 
 import com.kpi.springcourse.model.Skill;
 import com.kpi.springcourse.repository.SkillRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SkillService {
-    private SkillRepository skillRepository;
+
+    private final SkillRepository skillRepository;
 
     public Skill create(Skill entity) {
         return skillRepository.create(entity);
     }
 
     public Skill findById(Long id) {
-        return skillRepository.findById(id);
+        return skillRepository.findById(id).orElseThrow(() -> {
+            throw new RuntimeException("Skill with id %d not found".formatted(id));
+        });
     }
 
     public Skill findByType(String type) {
-        return skillRepository.findByType(type).orElseThrow(IllegalArgumentException::new);
+        return skillRepository.findByType(type).orElseThrow(() -> {
+            throw new RuntimeException("Skill with type '%s' not found".formatted(type));
+        });
     }
 
     public List<Skill> findAll() {
@@ -32,7 +37,7 @@ public class SkillService {
         return skillRepository.update(source, target);
     }
 
-    public Skill delete(Long id) {
-        return skillRepository.delete(id);
+    public void delete(Long id) {
+        skillRepository.delete(id);
     }
 }

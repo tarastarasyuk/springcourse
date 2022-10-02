@@ -3,26 +3,21 @@ package com.kpi.springcourse.repository.impl;
 import com.kpi.springcourse.model.Opportunity;
 import com.kpi.springcourse.model.Student;
 import com.kpi.springcourse.repository.StudentRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
-@AllArgsConstructor
 public class JdbcStudentRepository implements StudentRepository {
-
-    private JdbcTemplate jdbcTemplate;
-
     @Override
     public Student create(Student entity) {
         return null;
     }
 
     @Override
-    public Student findById(Long aLong) {
-        return null;
+    public Optional<Student> findById(Long aLong) {
+        return Optional.empty();
     }
 
     @Override
@@ -36,8 +31,8 @@ public class JdbcStudentRepository implements StudentRepository {
     }
 
     @Override
-    public Student delete(Long aLong) {
-        return null;
+    public void delete(Long aLong) {
+
     }
 
     @Override

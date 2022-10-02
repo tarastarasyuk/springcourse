@@ -4,6 +4,6 @@ import com.kpi.springcourse.model.Skill;
 
 import java.util.Optional;
 
-public interface SkillRepository extends CrudRepository<Skill, Long>{
+public interface SkillRepository extends CrudRepository<Skill, Long> {
     Optional<Skill> findByType(String type);
 }

@@ -1,11 +1,16 @@
 package com.kpi.springcourse.repository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface CrudRepository<E, ID> {
-    E create(E entity);
-    E findById(ID id);
-    List<E> findAll();
-    E update(E source, E target);
-    E delete(ID id);
+public interface CrudRepository<T, ID> {
+    T create(T entity);
+
+    Optional<T> findById(ID id);
+
+    List<T> findAll();
+
+    T update(T source, T target);
+
+    void delete(ID id);
 }

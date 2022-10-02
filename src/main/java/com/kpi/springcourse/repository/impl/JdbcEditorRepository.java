@@ -2,26 +2,21 @@ package com.kpi.springcourse.repository.impl;
 
 import com.kpi.springcourse.model.Editor;
 import com.kpi.springcourse.repository.EditorRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
-@AllArgsConstructor
 public class JdbcEditorRepository implements EditorRepository {
-
-    private JdbcTemplate jdbcTemplate;
-
     @Override
     public Editor create(Editor entity) {
         return null;
     }
 
     @Override
-    public Editor findById(Long aLong) {
-        return null;
+    public Optional<Editor> findById(Long aLong) {
+        return Optional.empty();
     }
 
     @Override
@@ -35,17 +30,17 @@ public class JdbcEditorRepository implements EditorRepository {
     }
 
     @Override
-    public Editor delete(Long aLong) {
-        return null;
-    }
+    public void delete(Long aLong) {
 
-    @Override
-    public boolean checkIfEmailAvailable(String email) {
-        return false;
     }
 
     @Override
     public Optional<Editor> findByEmail(String email) {
         return Optional.empty();
+    }
+
+    @Override
+    public boolean checkIfEmailAvailable(String email) {
+        return false;
     }
 }
