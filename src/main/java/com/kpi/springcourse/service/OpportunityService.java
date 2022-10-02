@@ -36,7 +36,7 @@ public class OpportunityService {
 
     public Opportunity update(Opportunity source, Opportunity target) {
         source.setCreatedAt(target.getCreatedAt());
-        return opportunityRepository.update(source, target);
+        return findById(opportunityRepository.update(source, target).getId());
     }
 
     public Opportunity delete(Long id) {
@@ -64,6 +64,7 @@ public class OpportunityService {
                         )
                         .collect(Collectors.toList());
                 default -> {
+                    throw new IllegalStateException();
                 }
             }
         }

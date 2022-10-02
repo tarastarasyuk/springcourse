@@ -35,8 +35,9 @@ public class StudentService {
         return studentRepository.delete(id);
     }
 
-    public void likeUnlikeOpportunity(Student student, Opportunity opportunity) {
+    public Student likeUnlikeOpportunity(Student student, Opportunity opportunity) {
         studentRepository.likeUnlikeOpportunity(student, opportunity);
+        return findById(student.getId());
     }
 
     public Student findByEmail(String email) {

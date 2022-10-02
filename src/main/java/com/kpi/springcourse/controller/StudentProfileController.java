@@ -1,55 +1,78 @@
 package com.kpi.springcourse.controller;
 
 import com.kpi.springcourse.constants.SpringCourseConstants;
+import com.kpi.springcourse.dto.StudentDto;
+import com.kpi.springcourse.model.Skill;
 import com.kpi.springcourse.model.Student;
+import com.kpi.springcourse.service.EditorService;
 import com.kpi.springcourse.service.OpportunityService;
+import com.kpi.springcourse.service.SkillService;
 import com.kpi.springcourse.service.StudentService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @AllArgsConstructor
 public class StudentProfileController {
 
     private StudentService studentService;
+    private EditorService editorService;
+
+    private SkillService skillService;
+
     private OpportunityService opportunityService;
 
-    @GetMapping("/students")
-    public String getAll(Model model) {
-        model.addAttribute("students", studentService.findAll());
-        return "students";
+    @ApiOperation(value = "Get student profile", notes = "Calling this endpoint you will get information about student.")
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<Student> profile(
+            @ApiParam(name = "id", example = "1", required = true, type = "Long", value = "Student id")
+            @PathVariable Long id) {
+        return new ResponseEntity<>(studentService.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/profile")
-    public String profile(Model model, HttpServletRequest request) {
-        model.addAttribute("user", studentService.findByEmail((String) request.getSession().getAttribute(SpringCourseConstants.SESSION_AUTH_ATTR)));
-        return "profile/index";
-    }
-
-    @PostMapping("/profile/unlike/{id}")
-    public String unlikeOpportunity(@PathVariable Long id, HttpServletRequest request) {
+    @ApiOperation(value = "Unlike opportunity", notes = "Calling this endpoint you will set this opportunity for current user as unliked.")
+    @PutMapping("/profile/{studentId}/unlike/{opportunityId}")
+    public ResponseEntity<Student> unlikeOpportunity(
+            @ApiParam(name = "sort", example = "3", required = true, type = "Long", value = "Student id")
+            @PathVariable Long studentId,
+            @ApiParam(name = "opportunityId", example = "4", required = true, type = "Long", value = "Opportunity id to be unliked")
+            @PathVariable Long opportunityId) {
+        Student student = studentService.findById(studentId);
         studentService.likeUnlikeOpportunity(
-                studentService.findByEmail((String) request.getSession().getAttribute("userEmail")),
-                opportunityService.findById(id)
+                student,
+                opportunityService.findById(opportunityId)
         );
-        return "redirect:/profile";
+        return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
-    @PostMapping("/profile/save")
-    public String saveProfile(@ModelAttribute("user") Student student, Model model, HttpServletRequest request) {
-        if (!studentService.checkIfEmailAvailable(student.getEmail()) && !student.getEmail().equals(request.getSession().getAttribute("userEmail"))) {
-            model.addAttribute("emailError", "This email is already in use");
-            return "profile/index";
+    @ApiOperation(value = "Update student", notes = "Calling this endpoint you will student information.")
+    @PutMapping("/profile/{id}/save")
+    public ResponseEntity<Student> saveProfile(
+            @ApiParam(name = "studentDto", required = true, type = "StudentDto", value = "Student information")
+            @RequestBody StudentDto studentDto,
+            @ApiParam(name = "id", example = "4", required = true, type = "Long", value = "Student id to be updated")
+            @PathVariable Long id) {
+        if (!studentService.checkIfEmailAvailable(studentDto.getEmail())
+                && !editorService.checkIfEmailAvailable(studentDto.getEmail())) {
+            return new ResponseEntity<>(HttpStatus.IM_USED);
         }
-        Student updated = studentService.update(student, studentService.findByEmail((String) request.getSession().getAttribute("userEmail")));
-        request.getSession().setAttribute("userEmail", updated.getEmail());
-        return "redirect:/profile";
+
+        Set<Skill> skillSet = Arrays.stream(studentDto.getSkills())
+                .map(skillService::findByType)
+                .collect(Collectors.toSet());
+
+        Student updated = studentService.update(studentDto.toStudent(skillSet), studentService.findById(id));
+        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 }
