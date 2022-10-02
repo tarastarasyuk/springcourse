@@ -8,8 +8,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Opportunity {
     private Long id;
     private String name;
@@ -22,4 +22,11 @@ public class Opportunity {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdAt;
+
+    public Opportunity(String name, Date deadline, Boolean ASAP, String content) {
+        this.name = name;
+        this.deadline = deadline;
+        this.ASAP = ASAP;
+        this.content = content;
+    }
 }
