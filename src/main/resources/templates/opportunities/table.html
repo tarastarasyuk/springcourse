@@ -23,7 +23,7 @@
             </div>
             <div class="col-6">
                 <label for="searchOpportunities" class="form-label"></label>
-                <input class="form-control" id="searchOpportunities" placeholder="Type to search...">
+                <input class="form-control" onkeyup="myFunction()" id="searchOpportunities" placeholder="Type to search...">
             </div>
             <div class="col-2 position-relative">
                 <div class="dropdown position-absolute bottom-0 end-0">
@@ -46,7 +46,7 @@
 <section class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-10">
-            <table class="table">
+            <table class="table" id="oppTable">
                 <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -61,7 +61,7 @@
                     <td th:text="${opportunity.name}"></td>
                     <td th:text="${opportunity.deadline}"></td>
                     <td th:text="${opportunity.ASAP}"></td>
-                    <td id="content" th:text="${opportunity.content}"></td>
+                    <td id="content" class="content-td" th:text="${opportunity.content}"></td>
                     <td class="editor-action__buttons">
                         <a th:href="@{'opportunities/edit/' + ${opportunity.id}}">
                             <button type="button" class="btn btn-outline-primary">Edit</button>
@@ -83,19 +83,24 @@
         crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-    // $(document).ready(function () {
-    //     $('#searchOpportunities').on('keyup', function () {
-    //         var content = $('#content').val();
-    //         $.ajax({url: "action-page",
-    //             data:"content="+content,
-    //             type: "POST"
-    //         });
-    //     });
-    // });
-
-    $('#searchOpportunities').keyup(_.debounce(function () {
-        console.log("fffffffffffffffff")
-    } , 500));
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchOpportunities");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("oppTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByClassName("content-td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
 </script>
 </body>
 </html>

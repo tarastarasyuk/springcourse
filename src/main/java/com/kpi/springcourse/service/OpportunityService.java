@@ -2,6 +2,7 @@ package com.kpi.springcourse.service;
 
 import com.kpi.springcourse.model.Opportunity;
 import com.kpi.springcourse.repository.OpportunityRepository;
+import com.kpi.springcourse.repository.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ import static java.util.Objects.nonNull;
 public class OpportunityService {
 
     private OpportunityRepository opportunityRepository;
+
+    private StudentRepository studentRepository;
 
     public Opportunity create(Opportunity entity) {
         entity.setCreatedAt(Calendar.getInstance().getTime());
@@ -40,6 +43,11 @@ public class OpportunityService {
     }
 
     public Opportunity delete(Long id) {
+        Opportunity opportunity = findById(id);
+        studentRepository.findAll()
+                .stream()
+                .filter(student -> student.getLikedOpportunities().contains(opportunity))
+                .forEach(student -> studentRepository.likeUnlikeOpportunity(student, opportunity));
         return opportunityRepository.delete(id);
     }
 
