@@ -27,7 +27,9 @@ public class JdbcOpportunityRepository implements OpportunityRepository {
                     createOpportunitySql,
                     entity.getName(), entity.getDeadline(), entity.getASAP(), entity.getContent()
             );
-            return findLastOpportunity();
+            Opportunity created = findLastOpportunity();
+            log.info("New opportunity created: {}", created);
+            return created;
         } catch (Exception ex) {
             log.error("Cannot create new opportunity {}: {}", entity, ex.getMessage());
             throw new RuntimeException(ex);
@@ -43,7 +45,7 @@ public class JdbcOpportunityRepository implements OpportunityRepository {
     public Optional<Opportunity> findById(Long id) {
         String findOpportunityById = "SELECT * FROM opportunity WHERE id = ?";
         try {
-            return jdbcTemplate.queryForObject(
+            Optional<Opportunity> opportunity = jdbcTemplate.queryForObject(
                     findOpportunityById,
                     (rs, rowNum) -> Optional.of(new Opportunity(
                             rs.getLong(1),
@@ -55,6 +57,8 @@ public class JdbcOpportunityRepository implements OpportunityRepository {
                     )),
                     id
             );
+            log.info("Opportunity with id {} found: {}", id, opportunity.get());
+            return opportunity;
         } catch (Exception ex) {
             log.error("Opportunity with id {} not found: {}", id, ex.getMessage());
             return Optional.empty();
@@ -64,7 +68,7 @@ public class JdbcOpportunityRepository implements OpportunityRepository {
     @Override
     public List<Opportunity> findAll() {
         String findAllOpportunitiesSql = "SELECT * FROM opportunity";
-        return jdbcTemplate.query(
+        List<Opportunity> allOpportunities = jdbcTemplate.query(
                 findAllOpportunitiesSql,
                 (rs, rowNum) -> new Opportunity(
                         rs.getLong(1),
@@ -75,6 +79,8 @@ public class JdbcOpportunityRepository implements OpportunityRepository {
                         rs.getDate(6)
                 )
         );
+        log.info("{} opportunities found: {}", allOpportunities.size(), allOpportunities);
+        return allOpportunities;
     }
 
     @Override
@@ -86,7 +92,9 @@ public class JdbcOpportunityRepository implements OpportunityRepository {
                     updateOpportunitySql,
                     source.getName(), source.getDeadline(), source.getASAP(), source.getContent(), target.getId()
             );
-            return findById(target.getId()).get();
+            Opportunity updated = findById(target.getId()).get();
+            log.info("Opportunity {} updated: {}", target, updated);
+            return updated;
         } catch (Exception ex) {
             log.error("Cannot update opportunity {} -> {}: {}", target, source, ex.getMessage());
             throw new RuntimeException(ex);
@@ -98,5 +106,6 @@ public class JdbcOpportunityRepository implements OpportunityRepository {
     public void delete(Long id) {
         String deleteOpportunitySql = "DELETE FROM opportunity WHERE id = ?";
         jdbcTemplate.update(deleteOpportunitySql, id);
+        log.info("Opportunity with id {} deleted", id);
     }
 }
