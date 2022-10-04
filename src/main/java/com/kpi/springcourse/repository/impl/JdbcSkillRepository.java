@@ -105,9 +105,15 @@ public class JdbcSkillRepository implements SkillRepository {
 
     @Override
     public void delete(Long id) {
+        deleteStudentSkillsBySkillId(id);
         String deleteSkillSql = "DELETE FROM skill WHERE id = ?";
         jdbcTemplate.update(deleteSkillSql, id);
         log.info("Skill with id {} deleted", id);
+    }
+
+    private void deleteStudentSkillsBySkillId(long skillId) {
+        String deleteStudentSkillsBySkillIdSql = "DELETE FROM student_has_skill WHERE skill_id = ?";
+        jdbcTemplate.update(deleteStudentSkillsBySkillIdSql, skillId);
     }
 
     @Override

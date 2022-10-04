@@ -104,8 +104,16 @@ public class JdbcOpportunityRepository implements OpportunityRepository {
     @Override
     @Transactional
     public void delete(Long id) {
+        deleteStudentLikedOpportunitiesByOpportunityId(id);
         String deleteOpportunitySql = "DELETE FROM opportunity WHERE id = ?";
         jdbcTemplate.update(deleteOpportunitySql, id);
         log.info("Opportunity with id {} deleted", id);
+    }
+
+    private void deleteStudentLikedOpportunitiesByOpportunityId(long opportunityId) {
+        String deleteStudentLikedOpportunitiesByOpportunityIdSql = "DELETE FROM student_has_opportunity " +
+                "WHERE opportunity_id = ?";
+
+        jdbcTemplate.update(deleteStudentLikedOpportunitiesByOpportunityIdSql, opportunityId);
     }
 }
