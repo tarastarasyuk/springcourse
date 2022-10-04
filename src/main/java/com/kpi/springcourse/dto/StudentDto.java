@@ -18,6 +18,6 @@ public class StudentDto {
     private String[] skills;
 
     public Student toStudent(Set<Skill> skillSet) {
-        return new Student(null, email, firstName, lastName, age, phone, skillSet);
+        return new Student(email, firstName, lastName, age, phone, skillSet);
     }
 }
