@@ -39,8 +39,13 @@ public class AuthController {
             model.addAttribute("emailError", "User with this email does not exist");
             return "sign-in/index";
         }
-        User user = !studentService.checkIfEmailAvailable(emailRequest) ? studentService.findByEmail(emailRequest) :
-                editorService.findByEmail(emailRequest);
+
+        User user;
+        try{
+            user = studentService.findByEmail(emailRequest);
+        } catch (RuntimeException ex) {
+            user = editorService.findByEmail(emailRequest);
+        }
         request.getSession().setAttribute(SpringCourseConstants.SESSION_AUTH_ATTR, emailRequest);
         request.getSession().setAttribute(SpringCourseConstants.SESSION_AUTH_ATTR_ROLE, user.getRole().name());
         return "redirect:/";
