@@ -1,6 +1,7 @@
 package com.kpi.springcourse.repository.impl;
 
 import com.kpi.springcourse.model.Editor;
+import com.kpi.springcourse.model.Role;
 import com.kpi.springcourse.repository.EditorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ public class JdbcEditorRepository implements EditorRepository {
         String createEditorSql = "INSERT INTO editor (user_id) VALUES (?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        long userId = createUserAndReturnUserId(jdbcTemplate, entity.getEmail());
+        long userId = createUserAndReturnUserId(jdbcTemplate, entity.getEmail(), Role.ROLE_EDITOR);
         jdbcTemplate.update(con -> {
             PreparedStatement ps = con.prepareStatement(createEditorSql, Statement.RETURN_GENERATED_KEYS);
             ps.setLong(1, userId);

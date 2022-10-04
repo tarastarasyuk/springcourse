@@ -15,14 +15,14 @@ public interface UserRepository<T extends User, ID> extends CrudRepository<T, ID
 
     boolean checkIfEmailAvailable(String email);
 
-    default long createUserAndReturnUserId(JdbcTemplate jdbcTemplate, String email) {
+    default long createUserAndReturnUserId(JdbcTemplate jdbcTemplate, String email, Role role) {
         String createUserSql = "INSERT INTO user (email, role) VALUES (?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         try {
             jdbcTemplate.update(con -> {
                 PreparedStatement ps = con.prepareStatement(createUserSql, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, email);
-                ps.setString(2, Role.ROLE_EDITOR.name());
+                ps.setString(2, role.name());
                 return ps;
             }, keyHolder);
             return keyHolder.getKey().longValue();
