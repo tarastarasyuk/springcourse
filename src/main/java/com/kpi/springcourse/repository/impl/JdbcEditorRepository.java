@@ -40,17 +40,14 @@ public class JdbcEditorRepository implements EditorRepository {
     private long[] createEditorAndReturnUserAndEditorIds(Editor entity) {
         String createEditorSql = "INSERT INTO editor (user_id) VALUES (?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        try {
-            long userId = createUserAndReturnUserId(jdbcTemplate, entity.getEmail());
-            jdbcTemplate.update(con -> {
-                PreparedStatement ps = con.prepareStatement(createEditorSql, Statement.RETURN_GENERATED_KEYS);
-                ps.setLong(1, userId);
-                return ps;
-            }, keyHolder);
-            return new long[]{userId, keyHolder.getKey().longValue()};
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
+
+        long userId = createUserAndReturnUserId(jdbcTemplate, entity.getEmail());
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(createEditorSql, Statement.RETURN_GENERATED_KEYS);
+            ps.setLong(1, userId);
+            return ps;
+        }, keyHolder);
+        return new long[]{userId, keyHolder.getKey().longValue()};
     }
 
     @Override

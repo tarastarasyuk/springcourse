@@ -5,7 +5,6 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id", "email"})
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class User {
@@ -16,5 +15,10 @@ public abstract class User {
     public User(String email, Role role) {
         this.email = email;
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User: {id: %d, email: %s, role: %s}".formatted(id, email, role);
     }
 }
