@@ -2,11 +2,9 @@ package com.kpi.springcourse.service;
 
 import com.kpi.springcourse.model.Opportunity;
 import com.kpi.springcourse.repository.OpportunityRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.xml.catalog.Catalog;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
@@ -16,10 +14,10 @@ import java.util.stream.Collectors;
 import static java.util.Objects.nonNull;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class OpportunityService {
 
-    private OpportunityRepository opportunityRepository;
+    private final OpportunityRepository opportunityRepository;
 
     public Opportunity create(Opportunity entity) {
         entity.setCreatedAt(Calendar.getInstance().getTime());
@@ -27,7 +25,9 @@ public class OpportunityService {
     }
 
     public Opportunity findById(Long id) {
-        return opportunityRepository.findById(id);
+        return opportunityRepository.findById(id).orElseThrow(() -> {
+            throw new RuntimeException("Opportunity with id %d not found".formatted(id));
+        });
     }
 
     public List<Opportunity> findAll() {
@@ -39,8 +39,8 @@ public class OpportunityService {
         return findById(opportunityRepository.update(source, target).getId());
     }
 
-    public Opportunity delete(Long id) {
-        return opportunityRepository.delete(id);
+    public void delete(Long id) {
+        opportunityRepository.delete(id);
     }
 
     public List<Opportunity> findAll(String sort) {
